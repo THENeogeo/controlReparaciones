@@ -1,4 +1,4 @@
-package com.example.controlReparaciones;
+package com.controlReparaciones.controlReparaciones;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
