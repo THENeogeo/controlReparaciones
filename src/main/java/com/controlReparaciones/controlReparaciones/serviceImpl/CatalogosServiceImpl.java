@@ -38,6 +38,11 @@ public class CatalogosServiceImpl implements CatalogosService{
     }
     
     @Override
+    public List<Cat_Marcas> findAllMarcas() {
+        return marcasRepository.findAll();
+    }
+    
+    @Override
     public List<Cat_Marcas> listarPorTipoEquipo(Integer idTipoEquipo) {
         return marcasRepository.findByTipoEquipoIdTipoEquipoAndEstatus(idTipoEquipo, 1);
     }

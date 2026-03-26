@@ -17,6 +17,8 @@ public interface CatalogosService {
     
     List<Cat_Areas> findAllAreas();
     
+    List<Cat_Marcas> findAllMarcas();
+    
     List<Cat_Marcas> listarPorTipoEquipo(Integer idTipoEquipo);
     
     List<Cat_Modelos> listarPorMarca(Integer idMarca);

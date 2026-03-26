@@ -10,7 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
+import java.io.Serializable;
 
 /**
  *
@@ -18,8 +18,7 @@ import lombok.Data;
  */
 @Entity
 @Table(name = "catalogo_areas")
-@Data
-public class Cat_Areas {
+public class Cat_Areas implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +28,39 @@ public class Cat_Areas {
     private String descripcion;
     
     private Integer estatus = 1;
+
+    public Cat_Areas() {
+    }
+
+    public Cat_Areas(Integer idArea, String descripcion) {
+        this.idArea = idArea;
+        this.descripcion = descripcion;
+    }
+
+    public Integer getIdArea() {
+        return idArea;
+    }
+
+    public void setIdArea(Integer idArea) {
+        this.idArea = idArea;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Integer getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(Integer estatus) {
+        this.estatus = estatus;
+    }
+    
+    
     
 }
