@@ -5,6 +5,7 @@
 package com.controlReparaciones.controlReparaciones.controller;
 
 import com.controlReparaciones.controlReparaciones.entity.Cat_Areas;
+import com.controlReparaciones.controlReparaciones.entity.Cat_Marcas;
 import com.controlReparaciones.controlReparaciones.service.CatalogosService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +41,10 @@ public class CatalogosController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    // Obtener marcas filtradas por Tipo de Equipo
+//    @GetMapping(value = "/marcas/tipo-equipo/{id}")
+//    public ResponseEntity<Cat_Marcas> listarPorTipoEquipo(){
+//        
+//    }
 }

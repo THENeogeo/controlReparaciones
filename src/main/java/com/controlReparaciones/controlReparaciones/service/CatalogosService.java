@@ -5,6 +5,8 @@
 package com.controlReparaciones.controlReparaciones.service;
 
 import com.controlReparaciones.controlReparaciones.entity.Cat_Areas;
+import com.controlReparaciones.controlReparaciones.entity.Cat_Marcas;
+import com.controlReparaciones.controlReparaciones.entity.Cat_Modelos;
 import java.util.List;
 
 /**
@@ -14,4 +16,9 @@ import java.util.List;
 public interface CatalogosService {
     
     List<Cat_Areas> findAllAreas();
+    
+    List<Cat_Marcas> listarPorTipoEquipo(Integer idTipoEquipo);
+    
+    List<Cat_Modelos> listarPorMarca(Integer idMarca);
+    
 }

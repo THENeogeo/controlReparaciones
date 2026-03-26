@@ -5,7 +5,11 @@
 package com.controlReparaciones.controlReparaciones.serviceImpl;
 
 import com.controlReparaciones.controlReparaciones.entity.Cat_Areas;
+import com.controlReparaciones.controlReparaciones.entity.Cat_Marcas;
+import com.controlReparaciones.controlReparaciones.entity.Cat_Modelos;
 import com.controlReparaciones.controlReparaciones.repository.Cat_AreasRepository;
+import com.controlReparaciones.controlReparaciones.repository.Cat_MarcasRepository;
+import com.controlReparaciones.controlReparaciones.repository.Cat_ModelosRepository;
 import com.controlReparaciones.controlReparaciones.service.CatalogosService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +26,24 @@ public class CatalogosServiceImpl implements CatalogosService{
     @Autowired
     private Cat_AreasRepository areasRepository;
     
+    @Autowired
+    private Cat_MarcasRepository marcasRepository;
+    
+    @Autowired
+    private Cat_ModelosRepository modelosRepository;
+    
     @Override
     public List<Cat_Areas> findAllAreas() {
         return areasRepository.findAll();
     }
     
+    @Override
+    public List<Cat_Marcas> listarPorTipoEquipo(Integer idTipoEquipo) {
+        return marcasRepository.findByTipoEquipoIdTipoEquipoAndEstatus(idTipoEquipo, 1);
+    }
+    
+    @Override
+    public List<Cat_Modelos> listarPorMarca(Integer idMarca) {
+        return modelosRepository.findByMarcaIdMarcaAndEstatus(idMarca, 1);
+    }
 }
