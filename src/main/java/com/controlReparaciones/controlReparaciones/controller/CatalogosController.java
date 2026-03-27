@@ -7,6 +7,7 @@ package com.controlReparaciones.controlReparaciones.controller;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Areas;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Marcas;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Modelos;
+import com.controlReparaciones.controlReparaciones.entity.Cat_Refacciones;
 import com.controlReparaciones.controlReparaciones.service.CatalogosService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,43 @@ public class CatalogosController {
     // Obtener todas las marcas listadas
     @GetMapping(value = "/marcas/listarTodasLasMarcas")
     public ResponseEntity<List<Cat_Marcas>> findAllMarcas() {
-        return null;
+        try {
+            List<Cat_Marcas> result = catalogosService.findAllMarcas();
+            if(result.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // Obtener todos los modelos listados
+    @GetMapping(value = "/modelos/listarTodosLosModelos")
+    public ResponseEntity<List<Cat_Modelos>> findAllModelos() {
+        try {
+            List<Cat_Modelos> result = catalogosService.findAllModelos();
+            if(result.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // Obtener todas las refacciones listadas
+    @GetMapping(value = "/refacciones/listarTodasLasRefacciones")
+    public ResponseEntity <List<Cat_Refacciones>> findAllRefacciones() {
+        try {
+            List<Cat_Refacciones> result = catalogosService.findAllRefacciones();
+            if (result.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
     // Obtener modeos filtradas por Marca y Estatus
