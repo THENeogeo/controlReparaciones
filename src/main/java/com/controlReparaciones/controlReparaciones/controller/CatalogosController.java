@@ -8,6 +8,7 @@ import com.controlReparaciones.controlReparaciones.entity.Cat_Areas;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Marcas;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Modelos;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Refacciones;
+import com.controlReparaciones.controlReparaciones.entity.Cat_Tipo_Equipos;
 import com.controlReparaciones.controlReparaciones.service.CatalogosService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class CatalogosController {
     @GetMapping(value = "/marcas/listarMarcasPorTipoEquipo/{id}")
     public ResponseEntity<List<Cat_Marcas>> obtenerMarcas(@PathVariable("id") Integer id){
         try {
-            List<Cat_Marcas> result = catalogosService.listarPorTipoEquipo(id);
+            List<Cat_Marcas> result = catalogosService.listarMarcasPorTipoEquipo(id);
             if(result.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -103,11 +104,25 @@ public class CatalogosController {
         }
     }
     
-    // Obtener modeos filtradas por Marca y Estatus
+    // Obtener todos los tipo de equipos
+    @GetMapping( value = "equipos/listarTodosLosTiposDeEquipo")
+    public ResponseEntity <List<Cat_Tipo_Equipos>> findAllTipoEquipos() {
+        try {
+            List<Cat_Tipo_Equipos> result = catalogosService.findAllTipoEquipos();
+            if (result.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // Obtener modelos filtradas por Marca y Estatus
     @GetMapping(value = "/modelos/listarModelosPorMarca/{id}")
     public ResponseEntity<List<Cat_Modelos>> obtenerModelos(@PathVariable("id") Integer id) {
         try {
-            List<Cat_Modelos> result = catalogosService.listarPorMarca(id);
+            List<Cat_Modelos> result = catalogosService.listarModelosPorMarca(id);
             if(result.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -116,4 +131,19 @@ public class CatalogosController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    // Obtener refacciones filtradas por Tipo Equipo y Estatus
+    @GetMapping(value = "/refacciones/listarRefaccionesPorTipoEquipo/{id}")
+    public ResponseEntity<List<Cat_Refacciones>> obtenerRefacciones(@PathVariable("id") Integer id) {
+        try {
+            List<Cat_Refacciones> result = catalogosService.listarRefaccionesPorTipoEquipo(id);
+            if(result.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
 }

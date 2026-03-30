@@ -8,6 +8,7 @@ import com.controlReparaciones.controlReparaciones.entity.Cat_Areas;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Marcas;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Modelos;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Refacciones;
+import com.controlReparaciones.controlReparaciones.entity.Cat_Tipo_Equipos;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Tipo_Refaccion;
 import java.util.List;
 
@@ -17,18 +18,24 @@ import java.util.List;
  */
 public interface CatalogosService {
     
-    List<Cat_Areas> findAllAreas();
+    public List<Cat_Areas> findAllAreas();
     
-    List<Cat_Marcas> findAllMarcas();
+    public List<Cat_Marcas> findAllMarcas();
     
-    List<Cat_Modelos> findAllModelos();
+    public List<Cat_Modelos> findAllModelos();
     
-    List<Cat_Refacciones> findAllRefacciones();
+    public List<Cat_Refacciones> findAllRefacciones();
     
-    List<Cat_Tipo_Refaccion> findAllTipoRefaccion();
+    public List<Cat_Tipo_Refaccion> findAllTipoRefaccion();
     
-    List<Cat_Marcas> listarPorTipoEquipo(Integer idTipoEquipo);
+    public List<Cat_Tipo_Equipos> findAllTipoEquipos();
     
-    List<Cat_Modelos> listarPorMarca(Integer idMarca);
+    // Filtrar por tipo
+    
+    public List<Cat_Marcas> listarMarcasPorTipoEquipo(Integer idTipoEquipo);
+    
+    public List<Cat_Modelos> listarModelosPorMarca(Integer idMarca);
+    
+    public List<Cat_Refacciones> listarRefaccionesPorTipoEquipo(Integer idTipoEquipo);
     
 }

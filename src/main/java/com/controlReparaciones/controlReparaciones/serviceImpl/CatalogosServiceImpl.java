@@ -8,11 +8,13 @@ import com.controlReparaciones.controlReparaciones.entity.Cat_Areas;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Marcas;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Modelos;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Refacciones;
+import com.controlReparaciones.controlReparaciones.entity.Cat_Tipo_Equipos;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Tipo_Refaccion;
 import com.controlReparaciones.controlReparaciones.repository.Cat_AreasRepository;
 import com.controlReparaciones.controlReparaciones.repository.Cat_MarcasRepository;
 import com.controlReparaciones.controlReparaciones.repository.Cat_ModelosRepository;
 import com.controlReparaciones.controlReparaciones.repository.Cat_RefaccionesRepository;
+import com.controlReparaciones.controlReparaciones.repository.Cat_Tipo_EquiposRepository;
 import com.controlReparaciones.controlReparaciones.repository.Cat_Tipo_RefaccionRepository;
 import com.controlReparaciones.controlReparaciones.service.CatalogosService;
 import java.util.List;
@@ -42,6 +44,9 @@ public class CatalogosServiceImpl implements CatalogosService{
     @Autowired
     private Cat_Tipo_RefaccionRepository tipoRefaccionRepository;
     
+    @Autowired 
+    private Cat_Tipo_EquiposRepository tipoEquiposRepository;
+    
     @Override
     public List<Cat_Areas> findAllAreas() {
         return areasRepository.findAll();
@@ -68,12 +73,22 @@ public class CatalogosServiceImpl implements CatalogosService{
     }
     
     @Override
-    public List<Cat_Marcas> listarPorTipoEquipo(Integer idTipoEquipo) {
+    public List<Cat_Tipo_Equipos> findAllTipoEquipos() {
+        return tipoEquiposRepository.findAll();
+    }
+    
+    @Override
+    public List<Cat_Marcas> listarMarcasPorTipoEquipo(Integer idTipoEquipo) {
         return marcasRepository.findByTipoEquipoIdTipoEquipoAndEstatus(idTipoEquipo, 1);
     }
     
     @Override
-    public List<Cat_Modelos> listarPorMarca(Integer idMarca) {
+    public List<Cat_Modelos> listarModelosPorMarca(Integer idMarca) {
         return modelosRepository.findByMarcaIdMarcaAndEstatus(idMarca, 1);
+    }
+    
+    @Override
+    public List<Cat_Refacciones> listarRefaccionesPorTipoEquipo(Integer idTipoEquipo) {
+        return refaccionesRepository.findByTipoEquipoIdTipoEquipoAndEstatus(idTipoEquipo, 1);
     }
 }
