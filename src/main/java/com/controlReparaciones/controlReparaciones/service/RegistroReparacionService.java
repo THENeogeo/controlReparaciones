@@ -18,7 +18,9 @@ public interface RegistroReparacionService {
     
     public List<RegistroReparacionDTO> findAllRegistroReparacionDTO();
     
+    public RegistroReparacionDTO findOneRegistroReparacion(Integer idRegistroReparacion);
     
+    public Registro_Reparacion saveRegistroReparacion(Registro_Reparacion registroReparacion);
     
-    
+    public Registro_Reparacion updateRegistroReparacion(Integer idRegistroReparacion, Registro_Reparacion registroReparacion);
 }

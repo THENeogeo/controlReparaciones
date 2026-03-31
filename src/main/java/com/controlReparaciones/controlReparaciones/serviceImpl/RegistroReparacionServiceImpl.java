@@ -21,16 +21,30 @@ import org.springframework.stereotype.Service;
 public class RegistroReparacionServiceImpl implements RegistroReparacionService{
     
     @Autowired
-    private Registro_ReparacionRepository Registro_ReparacionRepository;
+    private Registro_ReparacionRepository registro_ReparacionRepository;
     
     @Override
     public List<Registro_Reparacion> findAllRegistroReparacion() {
-        return Registro_ReparacionRepository.findAll();
+        return registro_ReparacionRepository.findAll();
     }
     
     @Override
     public List<RegistroReparacionDTO> findAllRegistroReparacionDTO() {
-        return Registro_ReparacionRepository.findAllReparacionesDTO();
+        return registro_ReparacionRepository.findAllReparacionesDTO();
     }
     
+    @Override
+    public RegistroReparacionDTO findOneRegistroReparacion(Integer idRegistroReparacion){
+        return registro_ReparacionRepository.findOneRegistroReparacion(idRegistroReparacion);
+    }
+    
+    @Override
+    public Registro_Reparacion saveRegistroReparacion(Registro_Reparacion registroReparacion) {
+        return registro_ReparacionRepository.save(registroReparacion);
+    }
+    
+    @Override
+    public Registro_Reparacion updateRegistroReparacion(Integer idRegistroReparacion, Registro_Reparacion registroReparacion){
+        return null;
+    }
 }

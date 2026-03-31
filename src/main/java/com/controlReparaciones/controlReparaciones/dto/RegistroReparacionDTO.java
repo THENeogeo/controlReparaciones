@@ -4,6 +4,7 @@
  */
 package com.controlReparaciones.controlReparaciones.dto;
 
+//import java.time.LocalDate;
 import java.time.LocalDate;
 
 /**
@@ -19,7 +20,7 @@ public class RegistroReparacionDTO {
     private String inventario;
     private String refaccion;
     private String tipoRefaccion;
-    private String refacciónInventario;
+    private String refaccionInventario;
     private String descripcionReporte;
     private String expediente;
     private String area;
@@ -28,7 +29,7 @@ public class RegistroReparacionDTO {
     public RegistroReparacionDTO() {
     }
 
-    public RegistroReparacionDTO(Integer idReparacion, String tipoEquipo, String marca, String modelo, String inventario, String refaccion, String tipoRefaccion, String refacciónInventario, String descripcionReporte, String expediente, String area, LocalDate fechaRegistro) {
+    public RegistroReparacionDTO(Integer idReparacion, String tipoEquipo, String marca, String modelo, String inventario, String refaccion, String tipoRefaccion, String refaccionInventario, String descripcionReporte, String expediente, String area, LocalDate fechaRegistro) {
         this.idReparacion = idReparacion;
         this.tipoEquipo = tipoEquipo;
         this.marca = marca;
@@ -36,7 +37,7 @@ public class RegistroReparacionDTO {
         this.inventario = inventario;
         this.refaccion = refaccion;
         this.tipoRefaccion = tipoRefaccion;
-        this.refacciónInventario = refacciónInventario;
+        this.refaccionInventario = refaccionInventario;
         this.descripcionReporte = descripcionReporte;
         this.expediente = expediente;
         this.area = area;
@@ -99,12 +100,12 @@ public class RegistroReparacionDTO {
         this.tipoRefaccion = tipoRefaccion;
     }
 
-    public String getRefacciónInventario() {
-        return refacciónInventario;
+    public String getRefaccionInventario() {
+        return refaccionInventario;
     }
 
-    public void setRefacciónInventario(String refacciónInventario) {
-        this.refacciónInventario = refacciónInventario;
+    public void setRefaccionInventario(String refaccionInventario) {
+        this.refaccionInventario = refaccionInventario;
     }
 
     public String getDescripcionReporte() {
@@ -138,7 +139,7 @@ public class RegistroReparacionDTO {
     public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+
     
-    
-    
+
 }

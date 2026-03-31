@@ -9,6 +9,7 @@ import com.controlReparaciones.controlReparaciones.entity.Registro_Reparacion;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -31,5 +32,21 @@ public interface Registro_ReparacionRepository extends JpaRepository<Registro_Re
            "JOIN r.tipoRefaccion tr " +
            "JOIN r.area a")
     List<RegistroReparacionDTO> findAllReparacionesDTO();
+    
+    @Query("SELECT new com.controlReparaciones.controlReparaciones.dto.RegistroReparacionDTO(" +
+           "r.idReparacion, te.descripcion, ma.descripcion, mo.descripcion, " +
+           "r.inventario, ref.descripcion, tr.descripcion, r.refaccionInventario, " +
+           "r.descripcionReporte, r.expediente, a.descripcion, r.fechaRegistro) " +
+           "FROM Registro_Reparacion r " +
+           "LEFT JOIN r.tipoEquipo te " +
+           "LEFT JOIN r.marca ma " +
+           "LEFT JOIN r.modelo mo " +
+           "LEFT JOIN r.refaccion ref " +
+           "LEFT JOIN r.tipoRefaccion tr " +
+           "LEFT JOIN r.area a " +
+           "WHERE r.idReparacion = :idRegistroReparacion")
+    RegistroReparacionDTO findOneRegistroReparacion(@Param("idRegistroReparacion") Integer idRegistroReparacion);
+    
+    
     
 }

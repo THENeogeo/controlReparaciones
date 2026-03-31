@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,7 +44,7 @@ public class RegistroReparacionController {
         
     }
     
-    @GetMapping("/listarRegistrosDeReparacionConDescripcion")
+    @GetMapping("/listarRegistrosDeReparacionConDescripcion") // Get para obtener/consultar
     public ResponseEntity<List<RegistroReparacionDTO>> findAllRegistroReparacionDTO() {
         try {
             List<RegistroReparacionDTO> result = registroReparacionService.findAllRegistroReparacionDTO();
@@ -49,6 +52,29 @@ public class RegistroReparacionController {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/buscarRegistroReparacion/{idRegistroReparacion}")
+    public ResponseEntity<RegistroReparacionDTO> findOneRegistroReparacion(@PathVariable Integer idRegistroReparacion) {
+        try {
+            RegistroReparacionDTO result = registroReparacionService.findOneRegistroReparacion(idRegistroReparacion);
+            if (result == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PostMapping("guardarRegistroReparacion") // Post para envíar/guardar
+    public ResponseEntity<Registro_Reparacion> saveRegistroReparacion(@RequestBody Registro_Reparacion registroReparacion) {
+        try {
+            Registro_Reparacion nuevoRegistro = registroReparacionService.saveRegistroReparacion(registroReparacion);
+            return new ResponseEntity<>(nuevoRegistro, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

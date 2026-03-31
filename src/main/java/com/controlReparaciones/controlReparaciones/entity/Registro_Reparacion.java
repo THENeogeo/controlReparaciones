@@ -13,7 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -58,12 +58,12 @@ public class Registro_Reparacion implements Serializable{
     @JoinColumn(name = "area_id", nullable = false)
     private Cat_Areas area;
     
-    private Date fechaRegistro;
+    private LocalDate fechaRegistro;
 
     public Registro_Reparacion() {
     }
 
-    public Registro_Reparacion(Integer idReparacion, Cat_Tipo_Equipos tipoEquipo, Cat_Marcas marca, Cat_Modelos modelo, String inventario, Cat_Refacciones refaccion, Cat_Tipo_Refaccion tipoRefaccion, String refaccionInventario, String descripcionReporte, String expediente, Cat_Areas area, Date fechaRegistro) {
+    public Registro_Reparacion(Integer idReparacion, Cat_Tipo_Equipos tipoEquipo, Cat_Marcas marca, Cat_Modelos modelo, String inventario, Cat_Refacciones refaccion, Cat_Tipo_Refaccion tipoRefaccion, String refaccionInventario, String descripcionReporte, String expediente, Cat_Areas area, LocalDate fechaRegistro) {
         this.idReparacion = idReparacion;
         this.tipoEquipo = tipoEquipo;
         this.marca = marca;
@@ -166,12 +166,17 @@ public class Registro_Reparacion implements Serializable{
         this.area = area;
     }
 
-    public Date getFechaRegistro() {
+    public LocalDate getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    @jakarta.persistence.PrePersist
+    protected void onCreate() {
+        this.fechaRegistro = LocalDate.now();
     }
     
     
