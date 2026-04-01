@@ -5,12 +5,16 @@
 package com.controlReparaciones.controlReparaciones.serviceImpl;
 
 import com.controlReparaciones.controlReparaciones.dto.RegistroReparacionDTO;
+import com.controlReparaciones.controlReparaciones.entity.Cat_Tipo_Equipos;
 import com.controlReparaciones.controlReparaciones.entity.Registro_Reparacion;
+import com.controlReparaciones.controlReparaciones.repository.Cat_Tipo_EquiposRepository;
 import com.controlReparaciones.controlReparaciones.repository.Registro_ReparacionRepository;
 import com.controlReparaciones.controlReparaciones.service.RegistroReparacionService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -22,6 +26,9 @@ public class RegistroReparacionServiceImpl implements RegistroReparacionService{
     
     @Autowired
     private Registro_ReparacionRepository registro_ReparacionRepository;
+    
+    @Autowired
+    private Cat_Tipo_EquiposRepository cat_Tipo_EquiposRepository;
     
     @Override
     public List<Registro_Reparacion> findAllRegistroReparacion() {
@@ -43,8 +50,29 @@ public class RegistroReparacionServiceImpl implements RegistroReparacionService{
         return registro_ReparacionRepository.save(registroReparacion);
     }
     
+    @Transactional // Se asegura que que se realice toda la transacción y si algo falla, se cancela todo
     @Override
-    public Registro_Reparacion updateRegistroReparacion(Integer idRegistroReparacion, Registro_Reparacion registroReparacion){
-        return null;
+    public Registro_Reparacion updateRegistroReparacion(Integer idRegistroReparacion, Registro_Reparacion registroReparacion) {
+        
+        // Buscamos si el registro existe en la BD
+        Optional<Registro_Reparacion> registroExistente = registro_ReparacionRepository.findById(idRegistroReparacion); // Objeto tipo Optional. Si el registro existe lo trae, si no esixte, regresa vacío
+        
+        if (registroExistente.isPresent()) {
+            
+            // Se estrae el registro original completo
+            Registro_Reparacion registroOriginal = registroExistente.get();
+            
+            // Se mantiene la fecha original y se colocal al registro nuevo
+            registroReparacion.setFechaRegistro(registroOriginal.getFechaRegistro());
+            registroReparacion.setIdReparacion(idRegistroReparacion);
+            
+            return registro_ReparacionRepository.save(registroReparacion);
+        } else {
+            
+            // El controlador deberá ver este null y devolver un ResponseEntity con HttpStatus.NOT_FOUND (404).
+            return null;
+        }
+        
     }
+    
 }

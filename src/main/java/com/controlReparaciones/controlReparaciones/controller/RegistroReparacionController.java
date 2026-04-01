@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,21 +31,21 @@ public class RegistroReparacionController {
     @Autowired
     private RegistroReparacionService registroReparacionService;
     
-    @GetMapping("/listarRegistrosDeReparacion")
-    public ResponseEntity<List<Registro_Reparacion>> findAllRegistroReparacion() {
-        try {
-            List<Registro_Reparacion> result = registroReparacionService.findAllRegistroReparacion();
-            if (result.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        
-    }
+//    @GetMapping("/listarRegistrosDeReparacion")
+//    public ResponseEntity<List<Registro_Reparacion>> findAllRegistroReparacion() {
+//        try {
+//            List<Registro_Reparacion> result = registroReparacionService.findAllRegistroReparacion();
+//            if (result.isEmpty()) {
+//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//            }
+//            return new ResponseEntity<>(result, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//        
+//    }
     
-    @GetMapping("/listarRegistrosDeReparacionConDescripcion") // Get para obtener/consultar
+    @GetMapping("/listarRegistrosDeReparacionConDescripcion") // Get: para obtener/consultar
     public ResponseEntity<List<RegistroReparacionDTO>> findAllRegistroReparacionDTO() {
         try {
             List<RegistroReparacionDTO> result = registroReparacionService.findAllRegistroReparacionDTO();
@@ -70,11 +71,25 @@ public class RegistroReparacionController {
         }
     }
     
-    @PostMapping("guardarRegistroReparacion") // Post para envíar/guardar
+    @PostMapping("/guardarRegistroReparacion") // Post: para envíar/guardar
     public ResponseEntity<Registro_Reparacion> saveRegistroReparacion(@RequestBody Registro_Reparacion registroReparacion) {
         try {
             Registro_Reparacion nuevoRegistro = registroReparacionService.saveRegistroReparacion(registroReparacion);
             return new ResponseEntity<>(nuevoRegistro, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PostMapping("/actualizarRegistroReparacion/{idRegistroReparacion}")
+    @Transactional
+    public ResponseEntity<Registro_Reparacion> updateRegistroReparacion(@PathVariable Integer idRegistroReparacion, @RequestBody Registro_Reparacion registroReparacion) {
+        try {
+            Registro_Reparacion registroActualizado = registroReparacionService.updateRegistroReparacion(idRegistroReparacion, registroReparacion);
+            if (registroActualizado == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(registroActualizado, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
