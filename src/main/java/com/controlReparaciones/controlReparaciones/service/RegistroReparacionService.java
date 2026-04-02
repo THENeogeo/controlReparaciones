@@ -6,6 +6,7 @@ package com.controlReparaciones.controlReparaciones.service;
 
 import com.controlReparaciones.controlReparaciones.dto.RegistroReparacionDTO;
 import com.controlReparaciones.controlReparaciones.entity.Registro_Reparacion;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -23,4 +24,6 @@ public interface RegistroReparacionService {
     public Registro_Reparacion saveRegistroReparacion(Registro_Reparacion registroReparacion);
     
     public Registro_Reparacion updateRegistroReparacion(Integer idRegistroReparacion, Registro_Reparacion registroReparacion);
+    
+    public List<RegistroReparacionDTO> findAllReparacionesByDateDTO(LocalDate fechaInicio, LocalDate fechaFin);
 }

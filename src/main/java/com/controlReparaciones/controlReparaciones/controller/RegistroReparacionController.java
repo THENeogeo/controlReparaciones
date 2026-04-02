@@ -7,6 +7,7 @@ package com.controlReparaciones.controlReparaciones.controller;
 import com.controlReparaciones.controlReparaciones.dto.RegistroReparacionDTO;
 import com.controlReparaciones.controlReparaciones.entity.Registro_Reparacion;
 import com.controlReparaciones.controlReparaciones.service.RegistroReparacionService;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -81,7 +82,7 @@ public class RegistroReparacionController {
         }
     }
     
-    @PostMapping("/actualizarRegistroReparacion/{idRegistroReparacion}")
+    @PostMapping("/editarRegistroReparacion/{idRegistroReparacion}")
     @Transactional
     public ResponseEntity<Registro_Reparacion> updateRegistroReparacion(@PathVariable Integer idRegistroReparacion, @RequestBody Registro_Reparacion registroReparacion) {
         try {
@@ -90,6 +91,20 @@ public class RegistroReparacionController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(registroActualizado, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/listarRegistroReparacionPorFechas/{fechaInicio}/{fechaFin}")
+    @Transactional
+    public ResponseEntity<List<RegistroReparacionDTO>> findAllReparacionesByDateDTO(@PathVariable LocalDate fechaInicioDate, @PathVariable LocalDate fechaFin) {
+        try {
+            List<RegistroReparacionDTO> result = registroReparacionService.findAllReparacionesByDateDTO(fechaInicioDate, fechaFin); 
+            if (result == null || result.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

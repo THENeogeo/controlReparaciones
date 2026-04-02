@@ -5,11 +5,10 @@
 package com.controlReparaciones.controlReparaciones.serviceImpl;
 
 import com.controlReparaciones.controlReparaciones.dto.RegistroReparacionDTO;
-import com.controlReparaciones.controlReparaciones.entity.Cat_Tipo_Equipos;
 import com.controlReparaciones.controlReparaciones.entity.Registro_Reparacion;
-import com.controlReparaciones.controlReparaciones.repository.Cat_Tipo_EquiposRepository;
 import com.controlReparaciones.controlReparaciones.repository.Registro_ReparacionRepository;
 import com.controlReparaciones.controlReparaciones.service.RegistroReparacionService;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,6 @@ public class RegistroReparacionServiceImpl implements RegistroReparacionService{
     
     @Autowired
     private Registro_ReparacionRepository registro_ReparacionRepository;
-    
-    @Autowired
-    private Cat_Tipo_EquiposRepository cat_Tipo_EquiposRepository;
     
     @Override
     public List<Registro_Reparacion> findAllRegistroReparacion() {
@@ -73,6 +69,11 @@ public class RegistroReparacionServiceImpl implements RegistroReparacionService{
             return null;
         }
         
+    }
+    
+    @Override
+    public List<RegistroReparacionDTO> findAllReparacionesByDateDTO(LocalDate fechaInicio, LocalDate fechaFin){
+        return registro_ReparacionRepository.findAllReparacionesByDateDTO(fechaInicio, fechaFin);
     }
     
 }
