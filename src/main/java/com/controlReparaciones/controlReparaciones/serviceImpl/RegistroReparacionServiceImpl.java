@@ -71,6 +71,7 @@ public class RegistroReparacionServiceImpl implements RegistroReparacionService{
         
     }
     
+    @Transactional
     @Override
     public List<RegistroReparacionDTO> findAllReparacionesByDateDTO(LocalDate fechaInicio, LocalDate fechaFin){
         return registro_ReparacionRepository.findAllReparacionesByDateDTO(fechaInicio, fechaFin);

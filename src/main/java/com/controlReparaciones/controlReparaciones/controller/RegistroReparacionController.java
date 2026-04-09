@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -83,7 +84,6 @@ public class RegistroReparacionController {
     }
     
     @PostMapping("/editarRegistroReparacion/{idRegistroReparacion}")
-    @Transactional
     public ResponseEntity<Registro_Reparacion> updateRegistroReparacion(@PathVariable Integer idRegistroReparacion, @RequestBody Registro_Reparacion registroReparacion) {
         try {
             Registro_Reparacion registroActualizado = registroReparacionService.updateRegistroReparacion(idRegistroReparacion, registroReparacion);
@@ -96,11 +96,10 @@ public class RegistroReparacionController {
         }
     }
     
-    @GetMapping("/listarRegistroReparacionPorFechas/{fechaInicio}/{fechaFin}")
-    @Transactional
-    public ResponseEntity<List<RegistroReparacionDTO>> findAllReparacionesByDateDTO(@PathVariable LocalDate fechaInicioDate, @PathVariable LocalDate fechaFin) {
+    @GetMapping("/listarRegistroReparacionPorFechas")
+    public ResponseEntity<List<RegistroReparacionDTO>> findAllReparacionesByDateDTO(@RequestParam LocalDate fechaInicio, @RequestParam LocalDate fechaFin) {
         try {
-            List<RegistroReparacionDTO> result = registroReparacionService.findAllReparacionesByDateDTO(fechaInicioDate, fechaFin); 
+            List<RegistroReparacionDTO> result = registroReparacionService.findAllReparacionesByDateDTO(fechaInicio, fechaFin); 
             if (result == null || result.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
