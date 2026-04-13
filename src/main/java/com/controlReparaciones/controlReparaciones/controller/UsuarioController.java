@@ -44,7 +44,7 @@ public class UsuarioController {
     
     // Busca todos los usuarios activos y no activos
     @GetMapping(value = "/api/listarUsuarios")
-    public ResponseEntity<Usuario> listarUsuarios() {
+    public ResponseEntity<List<Usuario>> listarUsuarios() {
         try {
             List<Usuario> result = usuarioService.findAll();
             if (result.isEmpty()) {
