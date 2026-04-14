@@ -69,3 +69,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
     
 }
+
+
+
+//Ajusta el Filtro en Java (Para limpiar la consola)
+//
+//Para que no te salgan esos mensajes de error cada vez que alguien intente loguearse, vamos a decirle al filtro que ignore las URLs públicas.
+//
+//En tu JwtAuthenticationFilter.java, modifica el inicio del método doFilterInternal:
+//Java
+//
+//@Override
+//protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+//    String requestPath = request.getServletPath();
+//
+//    // Si la petición es para generar token o para Swagger, deja pasar sin revisar
+//    if (requestPath.equals("/generate-token") || requestPath.contains("/swagger-ui") || requestPath.contains("/v3/api-docs")) {
+//        filterChain.doFilter(request, response);
+//        return;
+//    }
+//
+//    String requestTokenHeader = request.getHeader("Authorization");
+//    // ... el resto de tu código de validación ...
+//}

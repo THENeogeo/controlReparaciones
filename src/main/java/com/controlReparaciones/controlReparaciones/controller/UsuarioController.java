@@ -43,7 +43,7 @@ public class UsuarioController {
 //    RestTemplate restTemplate;
     
     // Busca todos los usuarios activos y no activos
-    @GetMapping(value = "/api/listarUsuarios")
+    @GetMapping(value = "/listarUsuarios")
     public ResponseEntity<List<Usuario>> listarUsuarios() {
         try {
             List<Usuario> result = usuarioService.findAll();
