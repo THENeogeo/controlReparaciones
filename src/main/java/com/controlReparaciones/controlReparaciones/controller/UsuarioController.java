@@ -90,6 +90,7 @@ public class UsuarioController {
             out.failed(Response.USERNAMEEXISTE, null);
             return new ResponseEntity<>(out, out.getCode());
         } catch (Exception e) {
+            e.printStackTrace();
             out.error();
             return new ResponseEntity<>(out, out.getCode());
         }

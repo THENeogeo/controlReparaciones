@@ -57,7 +57,9 @@ public class Usuario extends DateAudit implements UserDetails {
     @NotEmpty
     private Integer trabajador_id;
     
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER) // Cambiamos ALL por MERGE
+    /* ¿Por qué MERGE? CascadeType.MERGE le dice a Hibernate: "Si el usuario es nuevo, guárdalo. Si los roles ya existen, no intentes crearlos de nuevo, 
+    solo únelos (merge) usando la tabla intermedia".*/
     @JsonIgnore
     @JoinTable(
             name = "usuarios_roles",
