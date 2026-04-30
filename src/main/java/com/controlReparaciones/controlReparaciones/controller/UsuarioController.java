@@ -135,7 +135,7 @@ public class UsuarioController {
     // Activar o desactivar usuario
     // 1 Activo - 0 Inactivo
     @PostMapping(value = "/eliminarUsuario/{id}/{activo}")
-    public  ResponseEntity<Usuario> eliminarUsuario(@RequestBody @PathVariable Integer id, @PathVariable Integer activo) {
+    public  ResponseEntity<Usuario> eliminarUsuario( /* @RequestBody */  @PathVariable Integer id, @PathVariable Integer activo) {
         try {
             return new ResponseEntity<>(usuarioService.activo(id, activo), HttpStatus.CREATED);
         } catch (Exception e) {
@@ -166,7 +166,7 @@ public class UsuarioController {
     
     // Estado del usuario | activo o inactivo
     @PostMapping(value = "/estadoUsuario/{id}/{estatus}")
-    public ResponseEntity<Usuario> cambioEstatusGenero(@RequestBody @PathVariable Integer id, @PathVariable Integer estatus) {
+    public ResponseEntity<Usuario> cambioEstatusGenero( /* @RequestBody */ @PathVariable Integer id, @PathVariable Integer estatus) {
         try {
             return new ResponseEntity<>(usuarioService.activo(id, estatus), HttpStatus.OK);
         } catch (Exception e) {
