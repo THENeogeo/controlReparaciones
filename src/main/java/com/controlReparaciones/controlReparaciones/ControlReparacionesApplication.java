@@ -13,8 +13,8 @@ public class ControlReparacionesApplication {
         SpringApplication.run(ControlReparacionesApplication.class, args);
                 
       BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-      String password = encoder.encode("euni");
-      System.out.println(password);
+      String password = encoder.encode("admin");
+      System.out.println("Sistema iniciado correctamente");
     }
     
     @Bean

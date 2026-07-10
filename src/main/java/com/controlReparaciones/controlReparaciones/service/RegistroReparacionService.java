@@ -5,6 +5,7 @@
 package com.controlReparaciones.controlReparaciones.service;
 
 import com.controlReparaciones.controlReparaciones.dto.RegistroReparacionDTO;
+import com.controlReparaciones.controlReparaciones.dto.RegistroReparacionEditarDTO;
 import com.controlReparaciones.controlReparaciones.entity.Registro_Reparacion;
 import java.time.LocalDate;
 import java.util.List;
@@ -25,5 +26,11 @@ public interface RegistroReparacionService {
     
     public Registro_Reparacion updateRegistroReparacion(Integer idRegistroReparacion, Registro_Reparacion registroReparacion);
     
+    public void modificarRegistroReparacion(Integer idRegistroReparacion, RegistroReparacionEditarDTO dto);
+    
+    public RegistroReparacionEditarDTO findOneRegistroReparacionEditar(Integer idRegistroReparacion);
+    
     public List<RegistroReparacionDTO> findAllReparacionesByDateDTO(LocalDate fechaInicio, LocalDate fechaFin);
+    
+    public void eliminarRegistroReparacion(Integer idReparacion);
 }
