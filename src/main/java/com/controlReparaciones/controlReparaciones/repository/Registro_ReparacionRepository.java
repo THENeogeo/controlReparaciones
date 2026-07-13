@@ -10,11 +10,9 @@ import com.controlReparaciones.controlReparaciones.entity.Registro_Reparacion;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -69,6 +67,7 @@ public interface Registro_ReparacionRepository extends JpaRepository<Registro_Re
     List<RegistroReparacionDTO> findAllReparacionesByDateDTO(@Param("fechaInicio") LocalDate fechaInicio, @Param("fechaFin") LocalDate fechaFinal);
     
     @Query("SELECT new com.controlReparaciones.controlReparaciones.dto.RegistroReparacionEditarDTO(" +
+           "r.idReparacion, " +
            "te.idTipoEquipo, " +
            "ma.idMarca, " +
            "mo.idModelo, " +
