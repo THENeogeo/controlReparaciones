@@ -91,4 +91,9 @@ public class CatalogosServiceImpl implements CatalogosService{
     public List<Cat_Refacciones> listarRefaccionesPorTipoEquipo(Integer idTipoEquipo) {
         return refaccionesRepository.findByTipoEquipoIdTipoEquipoAndEstatus(idTipoEquipo, 1);
     }
+    
+    @Override
+    public Integer updateEstatusTipoEquipo(Integer idTipoEquipo){
+        return tipoEquiposRepository.updateEstatusTipoEquipo(idTipoEquipo);
+    }
 }

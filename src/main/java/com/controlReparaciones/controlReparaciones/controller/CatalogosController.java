@@ -9,6 +9,7 @@ import com.controlReparaciones.controlReparaciones.entity.Cat_Marcas;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Modelos;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Refacciones;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Tipo_Equipos;
+import com.controlReparaciones.controlReparaciones.entity.Cat_Tipo_Refaccion;
 import com.controlReparaciones.controlReparaciones.service.CatalogosService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +104,7 @@ public class CatalogosController {
     }
     
     // Obtener todos los tipo de equipos
-    @GetMapping( value = "equipos/listarTodosLosTiposDeEquipo")
+    @GetMapping( value = "/equipos/listarTodosLosTiposDeEquipo")
     public ResponseEntity <List<Cat_Tipo_Equipos>> findAllTipoEquipos() {
         try {
             List<Cat_Tipo_Equipos> result = catalogosService.findAllTipoEquipos();
@@ -143,5 +144,31 @@ public class CatalogosController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    // Obtener los tipos de refacción.
+    @GetMapping(value = "/refacciones/listarTipoRefaccion")
+    public ResponseEntity<List<Cat_Tipo_Refaccion>> listarTiposRefaccion() {
+        try {
+            List<Cat_Tipo_Refaccion> result = catalogosService.findAllTipoRefaccion();
+            if(result.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+       
+    }
+    
+    //Cambia el estatus de los tipos de equipo
+    @GetMapping(value = "/catalogos/cambiarEstatus/tipoEquipo/{idTipoEquipo}") 
+    public ResponseEntity<Integer> cambiarEstatusTipoEquipo(@PathVariable("idTipoEquipo") Integer idTipoEquipo) {
+        try {
+            Integer result = catalogosService.updateEstatusTipoEquipo(idTipoEquipo);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    } 
     
 }

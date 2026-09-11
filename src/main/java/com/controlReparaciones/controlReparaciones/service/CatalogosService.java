@@ -30,12 +30,14 @@ public interface CatalogosService {
     
     public List<Cat_Tipo_Equipos> findAllTipoEquipos();
     
-    // Filtrar por tipo
-    
+    // Filtrar por tipo    
     public List<Cat_Marcas> listarMarcasPorTipoEquipo(Integer idTipoEquipo);
     
     public List<Cat_Modelos> listarModelosPorMarca(Integer idMarca);
     
     public List<Cat_Refacciones> listarRefaccionesPorTipoEquipo(Integer idTipoEquipo);
+    
+    // Cambiar estatus de catálogos
+    public Integer updateEstatusTipoEquipo(Integer idTipoEquipo);
     
 }

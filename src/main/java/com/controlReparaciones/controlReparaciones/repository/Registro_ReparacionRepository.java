@@ -66,6 +66,7 @@ public interface Registro_ReparacionRepository extends JpaRepository<Registro_Re
            "WHERE fechaRegistro BETWEEN :fechaInicio AND :fechaFin")
     List<RegistroReparacionDTO> findAllReparacionesByDateDTO(@Param("fechaInicio") LocalDate fechaInicio, @Param("fechaFin") LocalDate fechaFinal);
     
+    // Encuentra una reparación por su id para editar
     @Query("SELECT new com.controlReparaciones.controlReparaciones.dto.RegistroReparacionEditarDTO(" +
            "r.idReparacion, " +
            "te.idTipoEquipo, " +
