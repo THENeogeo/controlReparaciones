@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface Cat_Tipo_EquiposRepository extends JpaRepository<Cat_Tipo_Equipos, Integer>{
     
+    // Cambio de estatus 
     @Modifying
     @Transactional
     @Query("""

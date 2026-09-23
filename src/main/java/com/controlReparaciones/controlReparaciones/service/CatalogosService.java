@@ -30,14 +30,39 @@ public interface CatalogosService {
     
     public List<Cat_Tipo_Equipos> findAllTipoEquipos();
     
-    // Filtrar por tipo    
+    // Filtrar por tipo 
     public List<Cat_Marcas> listarMarcasPorTipoEquipo(Integer idTipoEquipo);
     
     public List<Cat_Modelos> listarModelosPorMarca(Integer idMarca);
     
     public List<Cat_Refacciones> listarRefaccionesPorTipoEquipo(Integer idTipoEquipo);
     
-    // Cambiar estatus de catálogos
+    // Cambiar estatus de valores en los catálogos
     public Integer updateEstatusTipoEquipo(Integer idTipoEquipo);
+    
+    public Integer updateEstatusMarca(Integer idMarca);
+    
+    public Integer updateEstatusModelo(Integer idModelo);
+    
+    public Integer updateEstatusRefaccion(Integer idRefaccion);
+    
+    // Métodos para agregar valores a los catálogos
+    public Cat_Tipo_Equipos agregarTipoEquipo(String tipoEquipo);
+    
+    public Cat_Marcas agregarMarca(String marca, Integer tipoEquipoId);
+    
+    public Cat_Modelos agregarModelo(String modelo, Integer marcaId);
+    
+    public Cat_Refacciones agregarRefaccion(String refaccion, Integer tipoEquipoId);
+    
+    // Editar registros de catálogos
+    public Cat_Tipo_Equipos editarTipoEquipo(Integer tipoEquipoId, String tipoEquipo);
+    
+    public Cat_Marcas editarMarca(Integer marcaId, String marca);
+    
+    public Cat_Modelos editarModelo(Integer modeloId, String modelo);
+    
+    public Cat_Refacciones editarRefaccion(Integer refaccionId, String refaccion);
+            
     
 }

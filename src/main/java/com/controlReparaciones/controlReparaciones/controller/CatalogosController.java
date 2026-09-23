@@ -17,7 +17,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -161,7 +165,7 @@ public class CatalogosController {
     }
     
     //Cambia el estatus de los tipos de equipo
-    @GetMapping(value = "/catalogos/cambiarEstatus/tipoEquipo/{idTipoEquipo}") 
+    @GetMapping(value = "/equipos/cambiarEstatus/{idTipoEquipo}") 
     public ResponseEntity<Integer> cambiarEstatusTipoEquipo(@PathVariable("idTipoEquipo") Integer idTipoEquipo) {
         try {
             Integer result = catalogosService.updateEstatusTipoEquipo(idTipoEquipo);
@@ -170,5 +174,132 @@ public class CatalogosController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     } 
+    
+    // Cambia el estatus de las marcas
+    @GetMapping(value ="/marcas/cambiarEstatus/{idMarca}")
+    public ResponseEntity<Integer> cambiarEstatusMarca(@PathVariable("idMarca") Integer idMarca) {
+        try {
+            Integer result = catalogosService.updateEstatusMarca(idMarca);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
+    }
+    
+    // Cambia el estatus de los modelos
+    @GetMapping(value = "/modelos/cambiarEstatus/{idModelo}")
+    public ResponseEntity<Integer> cambiarEstatusModelo(@PathVariable("idModelo") Integer idModelo) {
+        try {
+            Integer result = catalogosService.updateEstatusModelo(idModelo);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // Cambia el estatus de las refacciones
+    @GetMapping(value = "/refacciones/cambiarEstatus/{idRefaccion}")
+    public ResponseEntity<Integer> cambiarEstatusRefaccion(@PathVariable("idRefaccion") Integer idRefaccion) {
+        try {
+            Integer result = catalogosService.updateEstatusRefaccion(idRefaccion);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // Agregar tipo de equipo al catálogo
+    @PostMapping(value = "/equipos/agregarEquipo")
+    public ResponseEntity<String> agregarEquipo(@RequestBody Cat_Tipo_Equipos tipoEquipo) {
+        try {
+            catalogosService.agregarTipoEquipo(tipoEquipo.getDescripcion());
+            return ResponseEntity.ok("Tipo de equipo agregado correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al agregar el tipo de equipo.");
+        }
+    }
+    
+    // Agregar marca al catálogo
+    @PostMapping(value = "/marcas/agregarMarca")
+    public ResponseEntity<String> agregarMarca(@RequestBody Cat_Marcas marca, @RequestParam Integer tipoEquipoId) {
+        try {
+            catalogosService.agregarMarca(marca.getDescripcion(), tipoEquipoId);
+            return ResponseEntity.ok("Marca agregada correctamente");
+        } catch (Exception e) {
+             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al agregar la marca.");
+        }
+    }
+    
+    // Agregar modelo al catálogo
+    @PostMapping(value = "/modelos/agregarModelo")
+    public ResponseEntity<String> agregarModelo(@RequestBody Cat_Modelos modelo, @RequestParam Integer marcaId) {
+        try {
+            catalogosService.agregarModelo(modelo.getDescripcion(), marcaId);
+            return ResponseEntity.ok("Modelo agregado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al agregar el modelo.");
+        }
+    }
+    
+    // Agregar refacciones al catálogo
+    @PostMapping(value = "refacciones/agregarRefaccion")
+    public ResponseEntity <String> agregarRefaccion(@RequestBody Cat_Refacciones refaccion, @RequestParam Integer tipoEquipoId) {
+        try {
+            catalogosService.agregarRefaccion(refaccion.getDescripcion(), tipoEquipoId);
+            return ResponseEntity.ok("Refacción agregada correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al agregar la refacción.");
+        }
+    }
+    
+    // -- Segmento de edición de las descripciones para cada catálogo --
+    
+    // Editar tipo de equipo
+    @PutMapping("/equipos/editarEquipo")
+    public ResponseEntity<String> editarTipoEquipo(@RequestParam Integer tipoEquipoId, @RequestParam String tipoEquipo) {
+        try {
+            catalogosService.editarTipoEquipo(tipoEquipoId, tipoEquipo);
+            return ResponseEntity.ok("Tipo de equipo actualizado correctamente." );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el tipo de equipo.");
+        }
+    }
+
+
+    // Editar marca
+    @PutMapping("/marcas/editarMarca")
+    public ResponseEntity<String> editarMarca(@RequestParam Integer marcaId, @RequestParam String marca) {
+        try {
+            catalogosService.editarMarca(marcaId, marca);
+            return ResponseEntity.ok("Marca actualizada correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar la marca.");
+        }
+    }
+
+
+    // Editar modelo
+    @PutMapping("/modelos/editarModelo")
+    public ResponseEntity<String> editarModelo(@RequestParam Integer modeloId, @RequestParam String modelo) {
+        try {
+            catalogosService.editarModelo(modeloId, modelo);
+            return ResponseEntity.ok("Modelo actualizado correctamente." );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el modelo.");
+        }
+    }
+
+
+    // Editar refacción
+    @PutMapping("/refacciones/editarRefaccion")
+    public ResponseEntity<String> editarRefaccion(@RequestParam Integer refaccionId, @RequestParam String refaccion) {
+        try {
+            catalogosService.editarRefaccion(refaccionId, refaccion);
+            return ResponseEntity.ok("Refacción actualizada correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) .body("Error al actualizar la refacción.");
+        }
+    }
     
 }

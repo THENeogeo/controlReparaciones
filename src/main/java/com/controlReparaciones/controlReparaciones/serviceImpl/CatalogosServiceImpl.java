@@ -92,8 +92,120 @@ public class CatalogosServiceImpl implements CatalogosService{
         return refaccionesRepository.findByTipoEquipoIdTipoEquipoAndEstatus(idTipoEquipo, 1);
     }
     
+    // Cambiar estatus en catálogos
     @Override
-    public Integer updateEstatusTipoEquipo(Integer idTipoEquipo){
+    public Integer updateEstatusTipoEquipo(Integer idTipoEquipo) {
         return tipoEquiposRepository.updateEstatusTipoEquipo(idTipoEquipo);
     }
+    
+    @Override
+    public Integer updateEstatusMarca(Integer idMarca){
+        return marcasRepository.updateEstatusMarca(idMarca);
+    }
+    
+    @Override
+    public Integer updateEstatusModelo(Integer idModelo) {
+        return modelosRepository.updateEstatusModelo(idModelo);
+    }
+    
+    @Override
+    public Integer updateEstatusRefaccion(Integer idRefaccion) {
+        return refaccionesRepository.updateEstatusRefaccion(idRefaccion);
+    }
+    
+    // Agregar a catálogos
+    @Override
+    public Cat_Tipo_Equipos agregarTipoEquipo(String descripcionTipoEquipo) {
+        Cat_Tipo_Equipos equipo = new Cat_Tipo_Equipos();
+        equipo.setDescripcion(descripcionTipoEquipo);
+        equipo.setEstatus(1);
+        
+        return tipoEquiposRepository.save(equipo);
+    }
+    
+    @Override
+    public Cat_Marcas agregarMarca(String descripcionMarca, Integer tipoEquipoId) {
+        Cat_Tipo_Equipos tipoEquipo = tipoEquiposRepository.getReferenceById(tipoEquipoId);
+        Cat_Marcas marca = new Cat_Marcas();
+
+        marca.setDescripcion(descripcionMarca);
+        marca.setTipoEquipo(tipoEquipo);
+        marca.setEstatus(1);
+
+        return marcasRepository.save(marca);
+    }
+    
+    @Override
+    public Cat_Modelos agregarModelo(String descripcionModelo, Integer marcaId) {
+        Cat_Marcas marca = marcasRepository.getReferenceById(marcaId);
+        Cat_Modelos modelo = new Cat_Modelos();
+        
+        modelo.setDescripcion(descripcionModelo);
+        modelo.setMarca(marca);
+        modelo.setEstatus(1);
+        
+        return modelosRepository.save(modelo);
+    }
+    
+    @Override
+    public Cat_Refacciones agregarRefaccion(String descripcionRefaccion, Integer tipoEquipoId) {
+        Cat_Tipo_Equipos tipoEquipo = tipoEquiposRepository.getReferenceById(tipoEquipoId);
+        Cat_Refacciones refaccion = new Cat_Refacciones();
+        
+        refaccion.setDescripcion(descripcionRefaccion);
+        refaccion.setTipoEquipo(tipoEquipo);
+        refaccion.setEstatus(1);
+        
+        return refaccionesRepository.save(refaccion);
+    }
+    
+    // Edición de los registros de catálogos
+    @Override
+    public Cat_Tipo_Equipos editarTipoEquipo(Integer tipoEquipoId, String tipoEquipo) {
+        Cat_Tipo_Equipos equipo = tipoEquiposRepository.findById(tipoEquipoId)
+                .orElseThrow(() -> new RuntimeException(
+                        "No existe el tipo de equipo con ID: " + tipoEquipoId
+                ));
+        
+        equipo.setDescripcion(tipoEquipo);
+
+        return tipoEquiposRepository.save(equipo);
+    }
+    
+    @Override
+    public Cat_Marcas editarMarca(Integer marcaId, String marca) {
+        Cat_Marcas catMarca = marcasRepository.findById(marcaId)
+                .orElseThrow(() -> new RuntimeException(
+                        "No existe la marca con ID: " + marcaId
+                ));
+
+        catMarca.setDescripcion(marca);
+
+        return marcasRepository.save(catMarca);
+    }
+    
+    @Override
+    public Cat_Modelos editarModelo(Integer modeloId, String modelo) {
+        Cat_Modelos catModelo = modelosRepository .findById(modeloId)
+                .orElseThrow(() -> new RuntimeException(
+                        "No existe el modelo con ID: " + modeloId
+                ));
+
+        catModelo.setDescripcion(modelo);
+
+        return modelosRepository.save(catModelo);
+    }
+    
+    @Override
+    public Cat_Refacciones editarRefaccion( Integer refaccionId, String refaccion) {
+        Cat_Refacciones catRefaccion = refaccionesRepository.findById(refaccionId)
+                .orElseThrow(() -> new RuntimeException(
+                        "No existe la refacción con ID: " + refaccionId
+                ));
+
+        catRefaccion.setDescripcion(refaccion);
+
+        return refaccionesRepository.save(catRefaccion);
+    }
+    
 }
