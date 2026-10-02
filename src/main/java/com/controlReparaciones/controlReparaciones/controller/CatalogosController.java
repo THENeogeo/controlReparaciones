@@ -4,6 +4,8 @@
  */
 package com.controlReparaciones.controlReparaciones.controller;
 
+import com.controlReparaciones.controlReparaciones.dto.AreaPersonalDTO;
+import com.controlReparaciones.controlReparaciones.dto.PersonalDTO;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Areas;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Marcas;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Modelos;
@@ -11,8 +13,11 @@ import com.controlReparaciones.controlReparaciones.entity.Cat_Refacciones;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Tipo_Equipos;
 import com.controlReparaciones.controlReparaciones.entity.Cat_Tipo_Refaccion;
 import com.controlReparaciones.controlReparaciones.service.CatalogosService;
+import controlReparaciones.controlReparaciones.exception.OutputEntity;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -35,6 +41,9 @@ public class CatalogosController {
     
     @Autowired
     private CatalogosService catalogosService;
+    
+    @Autowired
+    private RestTemplate restTemplate;
     
     // Obtener todas las areas listadas
     @GetMapping(value = "/areas/listarAreas")
@@ -300,6 +309,49 @@ public class CatalogosController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) .body("Error al actualizar la refacción.");
         }
+    }
+    
+     // SERVICIO EXTERNO | BUSCAR TRABAJADOR POR EXPEDIENTE 
+    @GetMapping(value = "/buscarAreaTrabajador/{idPersonal}")
+    public ResponseEntity<AreaPersonalDTO> trabajadorPlantillaExp(@PathVariable Integer idPersonal) {
+        // URL del servicio en el servidor remoto con el parámetro "expediente"
+        String urlRemota = "http://10.19.1.242:8080/plantilla/personal/buscarPorIdTrabajador/" + idPersonal;
+
+        // Hacer una solicitud GET al servidor remoto y obtener la respuesta
+        ResponseEntity<OutputEntity<AreaPersonalDTO>> response = restTemplate.exchange(
+                urlRemota,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<OutputEntity<AreaPersonalDTO>>() {
+        }
+        );
+
+        // Obtener el objeto personalDTO desde la respuesta de OutputEntity
+        AreaPersonalDTO personalArea = response.getBody().getData();
+
+        // Devolver la instancia de PersonaDTO
+        return new ResponseEntity<>(personalArea, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/buscarTrabajador/{expediente}")
+    public ResponseEntity<PersonalDTO> trabajadorPorExpediente(@PathVariable Integer expediente) {
+        // URL del servicio en el servidor remoto con el parámetro "expediente"
+        String urlRemota = "http://10.19.1.242:8080/plantilla/personal/buscar/" + expediente;
+
+        // Hacer una solicitud GET al servidor remoto y obtener la respuesta
+        ResponseEntity<OutputEntity<PersonalDTO>> response = restTemplate.exchange(
+                urlRemota,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<OutputEntity<PersonalDTO>>() {
+        }
+        );
+
+        // Obtener el objeto personalDTO desde la respuesta de OutputEntity
+        PersonalDTO personal = response.getBody().getData();
+
+        // Devolver la instancia de PersonaDTO
+        return new ResponseEntity<>(personal, HttpStatus.OK);
     }
     
 }
