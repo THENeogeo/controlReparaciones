@@ -262,6 +262,18 @@ public class CatalogosController {
         }
     }
     
+    // Agregar areas al catálogo
+    @PostMapping(value = "areas/agregarArea")
+    public ResponseEntity<String> agregarArea(@RequestBody String area) {
+        try {
+            catalogosService.agregarArea(area);
+            return ResponseEntity.ok("Área agregada correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al agregar el área.");
+        }
+        
+    } 
+    
     // -- Segmento de edición de las descripciones para cada catálogo --
     
     // Editar tipo de equipo

@@ -55,6 +55,8 @@ public interface CatalogosService {
     
     public Cat_Refacciones agregarRefaccion(String refaccion, Integer tipoEquipoId);
     
+    public Cat_Areas agregarArea(String areaDescripcion);
+    
     // Editar registros de catálogos
     public Cat_Tipo_Equipos editarTipoEquipo(Integer tipoEquipoId, String tipoEquipo);
     

@@ -159,6 +159,16 @@ public class CatalogosServiceImpl implements CatalogosService{
         return refaccionesRepository.save(refaccion);
     }
     
+    @Override
+    public Cat_Areas agregarArea(String areaDescripcion){
+        Cat_Areas area = new Cat_Areas();
+        
+        area.setDescripcion(areaDescripcion);
+        area.setEstatus(1);
+        
+        return areasRepository.save(area);
+    }
+    
     // Edición de los registros de catálogos
     @Override
     public Cat_Tipo_Equipos editarTipoEquipo(Integer tipoEquipoId, String tipoEquipo) {
